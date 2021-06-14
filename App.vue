@@ -14,12 +14,18 @@
 		<br>
 		<label for="cycles">Ciclos</label>
 		<br>
-		<input type="number" min="1" step="1" v-model="cycles" id="cycles" @input="calculateGhs">
+		<input type="number" min="1" step="1" v-model="cycles" id="cycles">
+		<br>
+		<br>
+		<button @click="calculateGhs">Calcular GH/s final</button>
 		<br>
 		<br>
 		<label for="ghsFinal">GH/s final</label>
 		<br>
-		<input type="number" :min="ghsInicial" v-model="ghsFinal" id="ghsFinal" @input="calculateCycles">
+		<input type="number" :min="ghsInicial" v-model="ghsFinal" id="ghsFinal">
+		<br>
+		<br>
+		<button @click="calculateCycles">Calcular ciclos</button>
 	</dialog>
 </template>
 
@@ -27,7 +33,7 @@
 * {
 	font-family: Arial, Helvetica, sans-serif;
 }
-input, select {
+input, select, button {
 	padding: 5px;
 	width: 200px;
 	box-sizing: border-box;
