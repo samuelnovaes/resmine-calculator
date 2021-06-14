@@ -1,32 +1,53 @@
 <template>
-	<div>
+	<dialog open>
 		<label for="ghsInicial">GH/s inicial</label>
 		<br>
-		<input type="number" min="0" v-model="ghsInicial" id="ghsInicial" @input="calculate">
+		<input type="number" min="0" v-model="ghsInicial" id="ghsInicial" @input="calculateGhs">
 		<br>
 		<br>
 		<label for="income">Tipo de ciclo</label>
 		<br>
-		<select v-model="income" @change="calculate">
+		<select v-model="income" @change="calculateGhs">
 			<option v-for="(type, i) in cycleTypes" :key="i" :value="type.income">{{type.label}}</option>
 		</select>
 		<br>
 		<br>
 		<label for="cycles">Ciclos</label>
 		<br>
-		<input type="number" min="1" step="1" v-model="cycles" id="cycles" @input="calculate">
-		<p>GH/s final: {{ghsFinal.toFixed(8)}}</p>
-	</div>
+		<input type="number" min="1" step="1" v-model="cycles" id="cycles" @input="calculateGhs">
+		<br>
+		<br>
+		<label for="ghsFinal">GH/s final</label>
+		<br>
+		<input type="number" :min="ghsInicial" v-model="ghsFinal" id="ghsFinal" @input="calculateDays">
+	</dialog>
 </template>
+
+<style scoped>
+* {
+	font-family: Arial, Helvetica, sans-serif;
+}
+input, select {
+	padding: 5px;
+	width: 200px;
+	box-sizing: border-box;
+}
+dialog {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	border: none;
+}
+</style>
 
 <script>
 export default {
 	data() {
 		return {
-			ghsInicial: 100,
-			cycles: 0,
+			ghsInicial: '100.00000000',
+			cycles: '1',
 			income: 2.3256,
-			ghsFinal: 0,
+			ghsFinal: '100.00000000',
 			cycleTypes: [
 				{ label: 'Por hora', income: 0.0969 },
 				{ label: 'Por dia', income: 2.3256 },
@@ -38,13 +59,22 @@ export default {
 		}
 	},
 	mounted() {
-		this.calculate();
+		this.calculateGhs();
 	},
 	methods: {
-		calculate() {
+		calculateGhs() {
 			this.ghsFinal = Number(this.ghsInicial);
 			for (let i = 0; i < this.cycles; i++) {
 				this.ghsFinal += this.ghsFinal * (this.income / 100);
+			}
+			this.ghsFinal = this.ghsFinal.toFixed(8);
+		},
+		calculateDays() {
+			let ghsFinal = Number(this.ghsInicial);
+			this.cycles = 0;
+			while(ghsFinal < this.ghsFinal) {
+				ghsFinal += ghsFinal * (this.income / 100);
+				this.cycles++;
 			}
 		}
 	}
