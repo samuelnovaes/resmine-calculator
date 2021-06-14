@@ -2,12 +2,12 @@
 	<dialog open>
 		<label for="ghsInicial">GH/s inicial</label>
 		<br>
-		<input type="number" min="0" v-model="ghsInicial" id="ghsInicial" @input="calculateGhs">
+		<input type="number" min="0" v-model="ghsInicial" id="ghsInicial">
 		<br>
 		<br>
 		<label for="income">Tipo de ciclo</label>
 		<br>
-		<select v-model="income" @change="calculateGhs">
+		<select v-model="income">
 			<option v-for="(type, i) in cycleTypes" :key="i" :value="type.income">{{type.label}}</option>
 		</select>
 		<br>
@@ -19,7 +19,7 @@
 		<br>
 		<label for="ghsFinal">GH/s final</label>
 		<br>
-		<input type="number" :min="ghsInicial" v-model="ghsFinal" id="ghsFinal" @input="calculateDays">
+		<input type="number" :min="ghsInicial" v-model="ghsFinal" id="ghsFinal" @input="calculateCycles">
 	</dialog>
 </template>
 
@@ -69,7 +69,7 @@ export default {
 			}
 			this.ghsFinal = this.ghsFinal.toFixed(8);
 		},
-		calculateDays() {
+		calculateCycles() {
 			let ghsFinal = Number(this.ghsInicial);
 			this.cycles = 0;
 			while(ghsFinal < this.ghsFinal) {
