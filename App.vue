@@ -14,7 +14,7 @@
 		<br>
 		<label for="cycles">Ciclos</label>
 		<br>
-		<input type="number" min="1" step="1" v-model="cycles" id="cycles">
+		<input type="number" min="1" step="1" v-model="cycles" id="cycles" @keydown.enter="calculateGhs">
 		<br>
 		<br>
 		<button @click="calculateGhs">Calcular GH/s final</button>
@@ -22,7 +22,7 @@
 		<br>
 		<label for="ghsFinal">GH/s final</label>
 		<br>
-		<input type="number" :min="ghsInicial" v-model="ghsFinal" id="ghsFinal">
+		<input type="number" :min="ghsInicial" v-model="ghsFinal" id="ghsFinal" @keydown.enter="calculateCycles">
 		<br>
 		<br>
 		<button @click="calculateCycles">Calcular ciclos</button>
@@ -73,7 +73,6 @@ export default {
 			for (let i = 0; i < this.cycles; i++) {
 				this.ghsFinal += this.ghsFinal * (this.income / 100);
 			}
-			this.ghsFinal = Math.round(this.ghsFinal);
 		},
 		calculateCycles() {
 			let ghsFinal = Number(this.ghsInicial);
