@@ -50,10 +50,10 @@ dialog {
 export default {
 	data() {
 		return {
-			ghsInicial: '100.00000000',
-			cycles: '1',
+			ghsInicial: 100,
+			cycles: 0,
 			income: 2.3256,
-			ghsFinal: '100.00000000',
+			ghsFinal: 0,
 			cycleTypes: [
 				{ label: 'Por hora', income: 0.0969 },
 				{ label: 'Por dia', income: 2.3256 },
@@ -73,7 +73,7 @@ export default {
 			for (let i = 0; i < this.cycles; i++) {
 				this.ghsFinal += this.ghsFinal * (this.income / 100);
 			}
-			this.ghsFinal = this.ghsFinal.toFixed(8);
+			this.ghsFinal = Math.round(this.ghsFinal);
 		},
 		calculateCycles() {
 			let ghsFinal = Number(this.ghsInicial);
